@@ -1,92 +1,110 @@
+# 🚲 Bike Sharing Demand – EDA & Regression Modeling
 
-# Bike Sharing Demand Analysis
-
-This project presents a full **Exploratory Data Analysis (EDA)** of the *Daily Bike Share* dataset. The goal of the analysis is to understand factors influencing bike rentals and prepare the dataset for further machine learning modeling.
-
----
-
-## Dataset Overview
-
-The dataset includes daily historical data from a bike-sharing company, containing:
-
-- **731 records**
-- **14 features**, including:
-  - Weather conditions (temperature, humidity, windspeed)
-  - Date-related features (season, month, weekday, holiday)
-  - Target variable: `rentals` (number of bikes rented daily)
-
-Data source: *daily-bike-share.csv*
+This project explores and models a bike sharing dataset with the goal of understanding the factors that influence daily rental counts. The notebook walks through a full data science workflow including data cleaning, exploratory data analysis (EDA), feature engineering, and regression modeling.
 
 ---
 
-## Technologies Used
+## 📌 Project Motivation
 
-- **Python 3**
-- **Pandas**
-- **NumPy**
-- **Matplotlib**
-- **Seaborn**
-- **Jupyter Notebook**
+Urban mobility is a growing challenge in modern cities. Understanding patterns in bike-sharing demand can help optimize fleet availability, guide infrastructure development, and improve sustainability efforts. This project aims to analyze real-world bike rental data and predict future demand based on environmental and calendar features.
 
 ---
 
-## EDA Process
+## 🔍 Dataset Overview
 
-1. **Data Loading & Cleaning**
-   - Converted date fields to datetime format.
-   - Removed non-informative features (e.g., row ID, year).
+- **Observations:** 731 daily records
+- **Target Variable:** `rentals` – total number of bikes rented per day
+- **Features:** 
+  - Numeric: temperature, humidity, windspeed
+  - Categorical: season, month, holiday, weekday, weather conditions
+
+---
+
+## 📊 Exploratory Data Analysis (EDA)
+
+1. **Initial Inspection**
+   - Null check, datatypes, basic summary statistics
 
 2. **Target Variable Analysis**
-   - Rentals are highly skewed.
-   - High variance between daily rentals.
+   - Distribution plot
+   - Boxplots to identify outliers
 
-3. **Time-Series Exploration**
-   - Weekly seasonality detected.
-   - Rentals peak during summer months.
+3. **Temporal Trends**
+   - Line plots showing seasonality and yearly comparisons
 
-4. **Numerical Feature Analysis**
-   - Strong correlation between temperature and rentals.
-   - Negative correlation for humidity and windspeed.
-   - Engineered a new feature: `difference_temp` to capture variance between temperature and "feels like" temperature.
+4. **Numerical Features**
+   - Correlation matrix
+   - Scatterplots and feature transformations
+   - Engineered `difference_temp` to handle collinearity
 
-5. **Categorical Feature Analysis**
-   - Analyzed categorical variables using violin plots.
-   - Seasonality, holidays, and weekdays show significant impact on demand.
+5. **Categorical Features**
+   - Grouped bar charts and violin plots for season, weekday, holiday, and weather
 
 ---
 
-## Key Insights
+## 🤖 Modeling Overview
 
-- **Temperature** is the most important factor for bike rentals.
-- **Summer months and working days** show higher rental volumes.
-- **Bad weather conditions (rain, snow, high humidity, high windspeed)** lead to lower rentals.
-- Weekly seasonality pattern is visible due to different behavior on weekends vs weekdays.
-- Additional feature engineering improved data quality for modeling.
+The following regression models were trained to predict daily rentals:
 
----
+- **Simple Linear Regression**
+  - Based on temperature only
+  - Fast and interpretable, but limited in power
 
-## How to Run
+- **Polynomial Regression**
+  - Applied with `GridSearchCV` to optimize polynomial degree
+  - Captures non-linear relationships
 
-1. Clone the repository or download the project files.
-2. Install the required Python libraries:
+- **ElasticNet Regression**
+  - Combines L1 and L2 regularization
+  - Integrated in a full preprocessing pipeline (numerical + categorical)
 
-```bash
-pip install pandas numpy matplotlib seaborn
-```
+### 🧪 Evaluation Metrics
 
-3. Open the notebook file in Jupyter:
+Models were evaluated using:
 
-```bash
-jupyter notebook bike_share_eda_professional.ipynb
-```
-
-4. Run all cells to reproduce the analysis.
+- R² (coefficient of determination)
+- MAE (Mean Absolute Error)
+- RMSE (Root Mean Squared Error)
+- MAPE (Mean Absolute Percentage Error)
 
 ---
 
-## Project Status
+## 📈 Visualizations
 
-✅ Data exploration and feature engineering completed  
-🚀 Ready for model development (regression, time-series forecasting, etc.)
+- Daily rental trends over time
+- Correlation matrix and scatter plots
+- Residual plots and prediction fit lines
+- Histograms of residuals
 
 ---
+
+## 💡 Final Insights
+
+- Summer and weekdays show the highest rental demand.
+- Temperature is the strongest single predictor.
+- Regularized regression with full preprocessing achieved the best performance.
+- Simple models are useful for quick estimates but miss non-linear patterns.
+
+---
+
+## 🧭 Recommendations
+
+- Optimize fleet availability based on weather and calendar forecasts.
+- Use temperature and seasonality trends to predict peak usage.
+- Consider advanced time-series models for finer-grained forecasting.
+
+---
+
+## 🔮 Next Steps
+
+- Incorporate weather forecast data (e.g., rain, humidity predictions)
+- Test time-series models like Prophet or ARIMA
+- Deploy the best model as a REST API for real-time predictions
+
+---
+
+## 🗂️ Files
+
+- `bike_share_eda.ipynb` – full notebook with analysis and models
+- `daily-bike-share.csv` – dataset
+- `README.md` – project description
